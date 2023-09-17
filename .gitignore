@@ -1,0 +1,11 @@
+segmentation/Ducknet/data
+segmentation/Ducknet/ModelSaveTensorFlow
+segmentation/Ducknet/ProgressFull
+
+
+__pycache__/
+
+*.pyc
+
+*.log
+*.tmp
