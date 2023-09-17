@@ -1,7 +1,18 @@
-segmentation/Ducknet/data
-segmentation/Ducknet/ModelSaveTensorFlow
-segmentation/Ducknet/ProgressFull
+# Ducknet
+data/
+ModelSaveTensorFlow/
+ProgressFull/
 
+# Preprocessing
+dataset/
+gt/
+image/
+mask/
+
+# Unet
+figures/
+models/
+results/
 
 __pycache__/
 
