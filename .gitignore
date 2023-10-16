@@ -8,6 +8,9 @@ dataset/
 gt/
 image/
 mask/
+roi/
+output/
+Predictions/
 
 # Unet
 figures/

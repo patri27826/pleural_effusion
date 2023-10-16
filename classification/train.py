@@ -8,11 +8,17 @@ from sklearn.metrics import roc_auc_score
 from sklearn.linear_model import LogisticRegression
 import matplotlib.pyplot as plt
 from sklearn.metrics import accuracy_score, recall_score, precision_score, f1_score, confusion_matrix
+import datetime
 import numpy as np
 import shap
+import os
     
 # 將資料轉換成DataFrame
 data = pd.read_csv('data.csv')
+
+shap_output_dir = "./shap_output/" + str(datetime.date.today()) + "/"
+os.makedirs(shap_output_dir, exist_ok=True)
+
 data = data.drop(['age','Etiology', 'id', 'pH(PL)', 'Gram Stain',
                  'Acid Fast B(PL)', 'Eosinophil%', 'React Lympho%'], axis=1)
 
@@ -54,7 +60,7 @@ classifiers = {
 }
 
 # 定義評估模型的函數
-def evaluate_model(model, X_train, y_train, X_val, y_val):
+def evaluate_model(model_name, model, X_train, y_train, X_val, y_val, count):
     model.fit(X_train, y_train)
     y_pred = model.predict(X_val)
     
@@ -71,17 +77,46 @@ def evaluate_model(model, X_train, y_train, X_val, y_val):
     y_scores = model.predict_proba(X_val)[:, 1]
     auc_roc = roc_auc_score(y_val, y_scores)
     
+    if model_name == "Random Forest":
+        explainer = shap.TreeExplainer(model) 
+        shap_values = explainer.shap_values(X_test) 
+        shap.summary_plot(shap_values, X_test, plot_type="bar", show=False)  
+        plt.savefig(f'{shap_output_dir}/Randon_Forest_{count}_shap_values.png')
+    elif model_name == "Decision Tree":
+        explainer = shap.TreeExplainer(model)
+        shap_values = explainer.shap_values(X_test)
+        shap.summary_plot(shap_values, X_test, plot_type="bar", show=False)
+        plt.savefig(f'{shap_output_dir}/Decision_Tree_{count}_shap_values.png')
+    elif model_name == "SVM":
+        explainer = shap.KernelExplainer(model.predict_proba, X_train)
+        shap_values = explainer.shap_values(X_test)
+        shap.summary_plot(shap_values, X_test, plot_type="bar", show=False)
+        plt.savefig(f'{shap_output_dir}/SVM_{count}_shap_values.png')
+    elif model_name == "KNN":
+        explainer = shap.KernelExplainer(model.predict_proba, X_train) 
+        shap_values = explainer.shap_values(X_test)
+        shap.summary_plot(shap_values, X_test, plot_type="bar", show=False)
+        plt.savefig(f'{shap_output_dir}/KNN_{count}_shap_values.png')
+    elif model_name == "Logistic Regression":
+        explainer = shap.LinearExplainer(model, X_train)
+        shap_values = explainer.shap_values(X_test)
+        shap.summary_plot(shap_values, X_test, plot_type="bar", show=False)
+        plt.savefig(f'{shap_output_dir}/Logistic_Regression_{count}_shap_values.png')
+    
     return accuracy, precision, recall, f1, specificity, auc_roc
+
+
 
 # 使用 K-Fold 交叉驗證
 n_splits = 5
 kf = KFold(n_splits=n_splits, shuffle=True, random_state=42)
 
 # 儲存指標的列表
-metrics = ['Precision', 'Recall', 'Specificity', 'F1 Score', 'AUC-ROC']
+metrics = ['Accuracy', 'Precision', 'Recall', 'Specificity', 'F1 Score', 'AUC-ROC']
 results = {metric: [] for metric in metrics}
 
 # 進行 K-Fold 交叉驗證
+ 
 for classifier_name, classifier in classifiers.items():
     print(f"Evaluating {classifier_name}...")
     
@@ -92,11 +127,12 @@ for classifier_name, classifier in classifiers.items():
     f1_scores = []
     auc_roc_scores = []
     
+    count = 1
     for train_index, val_index in kf.split(X_train):
         X_train_fold, X_val_fold = X_train.iloc[train_index], X_train.iloc[val_index]
         y_train_fold, y_val_fold = y_train.iloc[train_index], y_train.iloc[val_index]
         
-        accuracy_fold, precision_fold, recall_fold, f1_fold, specificity_fold, auc_roc_fold = evaluate_model(classifier, X_train_fold, y_train_fold, X_val_fold, y_val_fold)
+        accuracy_fold, precision_fold, recall_fold, f1_fold, specificity_fold, auc_roc_fold = evaluate_model(classifier_name, classifier, X_train_fold, y_train_fold, X_val_fold, y_val_fold, count)
         
         accuracy_scores.append(accuracy_fold)
         precision_scores.append(precision_fold)
@@ -104,25 +140,31 @@ for classifier_name, classifier in classifiers.items():
         f1_scores.append(f1_fold)
         specificity_scores.append(specificity_fold)
         auc_roc_scores.append(auc_roc_fold)
-    
+        
+        count = count + 1
+        
+    mean_accuracy = np.mean(accuracy_scores)
     mean_precision = np.mean(precision_scores)
     mean_recall = np.mean(recall_scores)
     mean_specificity = np.mean(specificity_scores)
     mean_f1 = np.mean(f1_scores)
     mean_auc_roc = np.mean(auc_roc_scores)
     
+    std_accuracy = np.std(accuracy_scores)
     std_precision = np.std(precision_scores)
     std_recall = np.std(recall_scores)
     std_specificity = np.std(specificity_scores)
     std_f1 = np.std(f1_scores)
     std_auc_roc = np.std(auc_roc_scores)
     
+    results['Accuracy'].append((mean_accuracy, std_accuracy))
     results['Precision'].append((mean_precision, std_precision))
     results['Recall'].append((mean_recall, std_recall))
     results['Specificity'].append((mean_specificity, std_specificity))
     results['F1 Score'].append((mean_f1, std_f1))
     results['AUC-ROC'].append((mean_auc_roc, std_auc_roc))
     
+
 # 輸出指標結果
 for metric in metrics:
     print(f"{metric} Scores:")
@@ -130,6 +172,7 @@ for metric in metrics:
         mean_score, std_score = results[metric][i]
         print(f"{classifier_name}: {mean_score:.2f} +- {std_score:.2f}")
     print("\n")
+
 
 # Prepare data for plotting
 model_scores = {}
@@ -139,7 +182,7 @@ for metric in metrics:
     for metric_mean, _ in results[metric]:
         model_scores[metric].append(metric_mean)
 
-blue_colors = ['#1f77b4', '#154c79', '#5b82a1', '#13446d', '#061724']
+blue_colors = ['#1f77b4', '#154c79', '#5b82a1', '#13446d', '#061724', '#1f77b8']
 
 # Create a grouped bar plot
 fig, ax = plt.subplots(figsize=(10, 3))
