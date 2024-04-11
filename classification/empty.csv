@@ -1,0 +1,120 @@
+Accuracy Scores:
+Random Forest: 0.84 +- 0.06
+Decision Tree: 0.85 +- 0.06
+Logistic Regression: 0.68 +- 0.04
+LightGBM: 0.82 +- 0.05
+XGBoost: 0.78 +- 0.08
+SVM: 0.86 +- 0.07
+AdaBoost: 0.79 +- 0.06
+
+
+Precision Scores:
+Random Forest: 0.83 +- 0.11
+Decision Tree: 0.83 +- 0.10
+Logistic Regression: 0.65 +- 0.10
+LightGBM: 0.78 +- 0.05
+XGBoost: 0.76 +- 0.10
+SVM: 0.80 +- 0.14
+AdaBoost: 0.76 +- 0.12
+
+
+Recall Scores:
+Random Forest: 0.83 +- 0.08
+Decision Tree: 0.90 +- 0.08
+Logistic Regression: 0.75 +- 0.10
+LightGBM: 0.88 +- 0.07
+XGBoost: 0.82 +- 0.09
+SVM: 0.95 +- 0.06
+AdaBoost: 0.88 +- 0.07
+
+
+Specificity Scores:
+Random Forest: 0.85 +- 0.12
+Decision Tree: 0.80 +- 0.14
+Logistic Regression: 0.61 +- 0.08
+LightGBM: 0.76 +- 0.06
+XGBoost: 0.74 +- 0.11
+SVM: 0.79 +- 0.14
+AdaBoost: 0.72 +- 0.15
+
+
+F1 Score Scores:
+Random Forest: 0.83 +- 0.07
+Decision Tree: 0.86 +- 0.05
+Logistic Regression: 0.68 +- 0.07
+LightGBM: 0.83 +- 0.05
+XGBoost: 0.79 +- 0.08
+SVM: 0.86 +- 0.07
+AdaBoost: 0.81 +- 0.06
+
+
+AUC-ROC Scores:
+Random Forest: 0.90 +- 0.06
+Decision Tree: 0.85 +- 0.06
+Logistic Regression: 0.70 +- 0.09
+LightGBM: 0.90 +- 0.04
+XGBoost: 0.89 +- 0.05
+SVM: 0.97 +- 0.02
+AdaBoost: 0.87 +- 0.06
+
+
+30pixel
+
+Accuracy Scores:
+Random Forest: 0.85 +- 0.05
+Decision Tree: 0.72 +- 0.09
+Logistic Regression: 0.75 +- 0.05
+LightGBM: 0.79 +- 0.03
+XGBoost: 0.82 +- 0.05
+SVM: 0.84 +- 0.09
+AdaBoost: 0.76 +- 0.07
+
+
+Precision Scores:
+Random Forest: 0.83 +- 0.03
+Decision Tree: 0.73 +- 0.08
+Logistic Regression: 0.75 +- 0.07
+LightGBM: 0.77 +- 0.07
+XGBoost: 0.80 +- 0.05
+SVM: 0.79 +- 0.10
+AdaBoost: 0.73 +- 0.08
+
+
+Recall Scores:
+Random Forest: 0.87 +- 0.12
+Decision Tree: 0.74 +- 0.09
+Logistic Regression: 0.75 +- 0.08
+LightGBM: 0.84 +- 0.08
+XGBoost: 0.85 +- 0.10
+SVM: 0.93 +- 0.12
+AdaBoost: 0.80 +- 0.13
+
+
+Specificity Scores:
+Random Forest: 0.82 +- 0.03
+Decision Tree: 0.70 +- 0.15
+Logistic Regression: 0.75 +- 0.08
+LightGBM: 0.73 +- 0.10
+XGBoost: 0.78 +- 0.04
+SVM: 0.76 +- 0.14
+AdaBoost: 0.71 +- 0.05
+
+
+F1 Score Scores:
+Random Forest: 0.85 +- 0.07
+Decision Tree: 0.73 +- 0.06
+Logistic Regression: 0.74 +- 0.06
+LightGBM: 0.79 +- 0.04
+XGBoost: 0.82 +- 0.07
+SVM: 0.85 +- 0.09
+AdaBoost: 0.76 +- 0.09
+
+
+AUC-ROC Scores:
+Random Forest: 0.91 +- 0.04
+Decision Tree: 0.72 +- 0.10
+Logistic Regression: 0.81 +- 0.06
+LightGBM: 0.86 +- 0.03
+XGBoost: 0.86 +- 0.06
+SVM: 0.93 +- 0.03
+AdaBoost: 0.83 +- 0.08

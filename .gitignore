@@ -11,11 +11,18 @@ mask/
 roi/
 output/
 Predictions/
+/segmentation/Preprocessing/70_noenhance_data
+/segmentation/Ducknet/noenhance_data
+/segmentation/Ducknet/Segment_Result
 
 # Unet
 figures/
 models/
 results/
+classification/shap_output
+classification/data
+classification/images
+classification/masks
 
 __pycache__/
 

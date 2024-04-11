@@ -3,6 +3,7 @@ import numpy as np
 import cv2
 from PIL import Image
 import pandas as pd
+from sklearn.model_selection import train_test_split, StratifiedKFold
 
 class MainWindow():
     def __init__(self):
@@ -88,42 +89,61 @@ class MainWindow():
         # 回傳點 list
         return data['points']
     
+    def fold_start(self):
+        image_folder = 'image'  # Change this to your image folder path
+        image_filenames = os.listdir(image_folder)
+        image_labels = [filename.split('-')[2] for filename in image_filenames]
+
+        skf = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
+        X_train, X_test, y_train, y_test = train_test_split(image_filenames, image_labels, test_size=0.1, random_state=42)
+
+        for fold, (train_idx, valid_idx) in enumerate(skf.split(X_train, y_train), start=1):
+            train_filenames = [image_filenames[i] for i in train_idx]
+            valid_filenames = [image_filenames[i] for i in valid_idx]
+            
+            # Create a folder for the fold
+            fold_dir = os.path.join('data', f'fold_{fold}')
+            if not os.path.exists(fold_dir):
+                os.makedirs(fold_dir)
+
+            # Create subfolders for images in train, valid, and test sets
+            for dataset in ['train', 'valid', 'test']:
+                dataset_dir = os.path.join(fold_dir, dataset, 'image_resize')
+                if not os.path.exists(dataset_dir):
+                    os.makedirs(dataset_dir)
+
+            # Copy training images
+            for filename in train_filenames:
+                image_path = os.path.join(image_folder, filename)
+                index = filename.split('-')[0]
+                img = cv2.imread(image_path)
+                img = self.denoising_image(img)
+                img = self.image_enhancement(img)
+                img = self.image_cropping(img)
+                imgs, filenames = self.image_augmentation(img, index)
+                
+                # for i in range(len(imgs)):
+                #     cv2.imwrite(os.path.join(fold_dir, 'train', 'image_resize', filenames[i]), imgs[i])
+                cv2.imwrite(os.path.join(fold_dir, 'train', 'image_resize', filename), img)
+            # Copy validation images
+            for filename in valid_filenames:
+                image_path = os.path.join(image_folder, filename)
+                img = cv2.imread(image_path)
+                img = self.denoising_image(img)
+                img = self.image_enhancement(img)
+                img = self.image_cropping(img)
+                cv2.imwrite(os.path.join(fold_dir, 'valid', 'image_resize', filename), img)
+
+            # Copy testing images
+            for filename in X_test:
+                image_path = os.path.join(image_folder, filename)
+                img = cv2.imread(image_path)
+                img = self.denoising_image(img)
+                img = self.image_enhancement(img)
+                img = self.image_cropping(img)
+                cv2.imwrite(os.path.join(fold_dir, 'test', 'image_resize', filename), img)
+        
     def start(self):
-        
-        # 用滑鼠找指定pixel的location及RGB數值
-        # read_file = '0001-Echo-1.jpg'
-        # img2 = cv2.imread(read_file)
-        # points  = self.get_points(img2)
-        # print("\npoints list:")
-        # print(points)
-        
-        # img = Image.open(read_file)
-        # img = img.convert('RGB')
-        # for i in points:
-        #     print(img.getpixel((i[0],i[1])))
-        
-        # return
-
-
-
-        
-        # 讀取檔案
-
-        # filepath = r'C:/Users/CCC/Desktop/tumour_project/data/Echo_0629/20220922_redo/mixed/img_origin'
-        #print(os.listdir(filepath))
-        # for f in os.listdir(filepath):
-        #     print(f)
-        
-        # pictures = [f for f in os.listdir(filepath) if os.path.isfile(os.path.join(filepath, f))]
-        #print(pictures)
-
-        
-        #for f in range(0, len(pictures)):
-        # for f in os.listdir(filepath):
-        #     img = cv2.imread(os.path.join(filepath,f))
-        #     img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-
-        
         n = 0
         # 迴圈讀取資料夾中的圖片
         for filename in os.listdir('image'):
@@ -133,105 +153,137 @@ class MainWindow():
             img = cv2.imread(image_path)
             img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
 
-            # remove the right top "T" 
-            x = 630 
-            y = 90 
-            width = 30
-            height = 30
-            img[y:y+height, x:x+width] = (0, 0, 0)
+            crop_img = self.image_cropping(img)
             
-            # remove unnecessary info
-            mask = img.copy()      
-            for y in range(0,mask.shape[1]):
-                for x in range(0,mask.shape[0]):
-                    
-                    if mask[x,y][0] >= 250 and mask[x,y][1] >= 250 and mask[x,y][2] >= 250:
-                        mask[x,y] = (255,255,255)
-                    elif mask[x,y][0] == 254 and mask[x,y][1] >= 254 and mask[x,y][2] == 254:
-                        mask[x,y] = (255,255,255)
-                    elif mask[x,y][0] >= 200 and mask[x,y][1] >= 200 and mask[x,y][2] >= 210:
-                        mask[x,y] = (255,255,255)
-                    elif mask[x,y][0] == 255 and mask[x,y][1] == 149 and mask[x,y][2] == 5:
-                        mask[x,y] = (255,255,255)
-                    else:
-                        mask[x,y] = (0,0,0)
-
-            cv2.imwrite(f'{n}_mask.bmp',mask)
-            mask = cv2.imread(f'{n}_mask.bmp',0)
+            # # denoise and enhancement
+            denoise_img = self.denoising_image(crop_img)
+            # # cv2.imwrite(f'{n}_denoise.bmp',denoise_img)
+            enhance_img = self.image_enhancement(denoise_img)
             
-            #鄰近消除法去除雜訊
-            img = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
-            dst1 = cv2.inpaint(img, mask, 3, cv2.INPAINT_NS)
-            cv2.imwrite(f'{n}_after_mask.bmp',dst1)
-            
-            # crop
-            x_min = 86
-            x_max = 885
-            y_min = 89
-            y_max = 645
-            crop_img = dst1[y_min:y_max, x_min:x_max]
-            
-            # denoise and enhancement
-            # denoise_img = self.denoising_image(crop_img)
-            # cv2.imwrite(f'{n}_denoise.bmp',denoise_img)
-            # enhance_img = self.image_enhancement(denoise_img)
+            # resize_img = cv2.resize(enhance_img, (352, 352), interpolation=cv2.INTER_AREA)
+            # cv2.imwrite(f'{n}_resize.jpg', resize_img)
             # cv2.imwrite(f'{n}_enhancement.bmp',enhance_img)
-            imgs, filenames = self.image_augmentation(crop_img, n)
-            for i in range(len(imgs)):
-                cv2.imwrite(f'image_resize/{filenames[i]}',imgs[i])
+            # imgs, filenames = self.image_augmentation(enhance_img, n)
+
+            cv2.imwrite(f'data/images/{n}.jpg',enhance_img)
             n = n + 1
         return
     
-    def image_augmentation(self,image, n):
+    def image_cropping(self, img):
+        x = 630 
+        y = 90 
+        width = 30
+        height = 30
+        img[y:y+height, x:x+width] = (0, 0, 0)
+        
+        # remove unnecessary info
+        mask = img.copy()      
+        for y in range(0,mask.shape[1]):
+            for x in range(0,mask.shape[0]):
+                
+                if mask[x,y][0] >= 250 and mask[x,y][1] >= 250 and mask[x,y][2] >= 250:
+                    mask[x,y] = (255,255,255)
+                elif mask[x,y][0] == 254 and mask[x,y][1] >= 254 and mask[x,y][2] == 254:
+                    mask[x,y] = (255,255,255)
+                elif mask[x,y][0] >= 200 and mask[x,y][1] >= 200 and mask[x,y][2] >= 210:
+                    mask[x,y] = (255,255,255)
+                elif mask[x,y][0] == 255 and mask[x,y][1] == 149 and mask[x,y][2] == 5:
+                    mask[x,y] = (255,255,255)
+                else:
+                    mask[x,y] = (0,0,0)
+
+        cv2.imwrite('mask.bmp',mask)
+        mask = cv2.imread('mask.bmp',0)
+        
+        #鄰近消除法去除雜訊
+        img = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
+        dst1 = cv2.inpaint(img, mask, 3, cv2.INPAINT_NS)
+        cv2.imwrite('after_mask.bmp',dst1)
+        
+        # crop
+        x_min = 86
+        x_max = 885
+        y_min = 89
+        y_max = 645
+        img = dst1[y_min:y_max, x_min:x_max]
+        
+        return img
+    
+    def image_augmentation(self, image, n):
         images = [image]
-        filenames = [f"PE_{n:03d}.png"]
+        filenames = [f"PE_{n}.png"]
 
         # 水平翻轉
         flipped_horizontally = cv2.flip(image, 1)
         images.append(flipped_horizontally)
-        filenames.append(f"PE_{n:03d}_flip_h.png")
+        filenames.append(f"PE_{n}_flip_h.png")
 
-        # 垂直翻轉
-        flipped_vertically = cv2.flip(image, 0)
-        images.append(flipped_vertically)
-        filenames.append(f"PE_{n:03d}_flip_v.png")
+        # 形變操作：輕度的向右彎曲
+        rows, cols, _ = image.shape
+        M_right = cv2.getRotationMatrix2D((cols / 2, rows / 2), -15, 1)
+        distorted_right = cv2.warpAffine(image, M_right, (cols, rows))
+        images.append(distorted_right)
+        filenames.append(f"PE_{n}_distorted_right.png")
 
-        # 對角翻轉
-        flipped_diagonally = cv2.flip(image, -1)
-        images.append(flipped_diagonally)
-        filenames.append(f"PE_{n:03d}_flip_diag.png")
+        # 形變操作：輕度的向左彎曲
+        M_left = cv2.getRotationMatrix2D((cols / 2, rows / 2), 15, 1)
+        distorted_left = cv2.warpAffine(image, M_left, (cols, rows))
+        images.append(distorted_left)
+        filenames.append(f"PE_{n}_distorted_left.png")
 
+        # # 加雜訊
+        # noisy_image = image + 0.1 * image.std() * np.random.normal(size=image.shape)
+        # images.append(noisy_image)
+        # filenames.append(f"PE_{n}_noisy.png")
 
-        # 不同角度的旋轉
-        angles = [30, 60, 90]
-        for angle in angles:
-            rows, cols = image.shape[:2]
-            M = cv2.getRotationMatrix2D((cols / 2, rows / 2), angle, 1.0)
-            rotated = cv2.warpAffine(image, M, (cols, rows))
-            images.append(rotated)
-            filenames.append(f"PE_{n:03d}_rotated_{angle}.png")
+        # 裁剪和填充
+        cropped = image[10:rows-100, 10:cols-100]
+        images.append(cropped)
+        filenames.append(f"PE_{n}_crop.png")
+        
+        # 對比度和亮度調整
+        contrast = np.random.uniform(0.5, 1.5)
+        brightness = np.random.randint(-30, 30)
+        adjusted_image = cv2.convertScaleAbs(image, alpha=contrast, beta=brightness)
+        images.append(adjusted_image)
+        filenames.append(f"PE_{n}_adjusted.png")
 
-        # 不同尺度的縮放
-        scales = [0.8, 1.2]
-        for scale in scales:
-            new_width = int(image.shape[1] * scale)
-            new_height = int(image.shape[0] * scale)
-            scaled = cv2.resize(image, (new_width, new_height))
-            images.append(scaled)
-            filenames.append(f"PE_{n:03d}_scaled_{scale}.png")
+        # # 形態學操作：膨脹
+        # kernel = np.ones((5, 5), np.uint8)
+        # dilated_image = cv2.dilate(image, kernel, iterations=1)
+        # images.append(dilated_image)
+        # filenames.append(f"PE_{n}_dilated.png")
+        
+        # # 形態學操作：侵蝕
+        # eroded_image = cv2.erode(image, kernel, iterations=1)
+        # images.append(eroded_image)
+        # filenames.append(f"PE_{n}_eroded.png")
 
-        # 隨機平移
-        shift_x = np.random.randint(-50, 50)
-        shift_y = np.random.randint(-50, 50)
-        M = np.float32([[1, 0, shift_x], [0, 1, shift_y]])
-        translated = cv2.warpAffine(image, M, (cols, rows))
-        images.append(translated)
-        filenames.append(f"PE_{n:03d}_translated_{shift_x}_{shift_y}.png")
-
+        # 椒鹽雜訊
+        salt_pepper_image = self.salt_and_pepper_medical(image)
+        images.append(salt_pepper_image)
+        filenames.append(f"PE_{n}_salt_pepper.png")
+        
         return images, filenames
+    
+    def salt_and_pepper_medical(self, image, amount=0.01, salt_prob=0.5):
+        noisy_image = np.copy(image)
+        num_salt = int(amount * image.size)
+        num_salt_pixels = int(num_salt * salt_prob)
+        num_pepper_pixels = num_salt - num_salt_pixels
+
+        # 添加鹽噪聲（白色）
+        coords_salt = [np.random.randint(0, i-1, num_salt_pixels) for i in image.shape]
+        noisy_image[coords_salt[0], coords_salt[1], :] = [255, 255, 255]
+
+        # 添加椒噪聲（黑色）
+        coords_pepper = [np.random.randint(0, i-1, num_pepper_pixels) for i in image.shape]
+        noisy_image[coords_pepper[0], coords_pepper[1], :] = [0, 0, 0]
+
+        return noisy_image
 
     def image_enhancement(self,img):
-        # Convert image to LAB color space
+         # Convert image to LAB color space
         lab = cv2.cvtColor(img, cv2.COLOR_BGR2LAB)
 
         # Split LAB channels
@@ -245,20 +297,14 @@ class MainWindow():
         lab_equalized = cv2.merge([l_equalized, a, b])
 
         # Convert back to BGR color space
-        adaptive_histogram = cv2.cvtColor(lab_equalized, cv2.COLOR_LAB2BGR)
+        enhanced_image = cv2.cvtColor(lab_equalized, cv2.COLOR_LAB2BGR)
         
-        # contrast_enhance = cv2.convertScaleAbs(adaptive_histogram, alpha=1.5, beta=0)
-        
-        # # Create sharpening kernel
-        # kernel = np.array([[-1, -1, -1],
-        #                 [-1,  9, -1],
-        #                 [-1, -1, -1]])
-        # sharpened = cv2.filter2D(contrast_enhance, -1, kernel)
-
-        return adaptive_histogram
+        return enhanced_image
 
     def denoising_image(self, img):
-        return cv2.medianBlur(img, 3)
+        # return cv2.medianBlur(img, 3)
+        return cv2.bilateralFilter(img, 3, 20, 75)
+        # return cv2.blur(img, (3, 3))
         
     def resize_image(self,img, height=240, width=240):
         

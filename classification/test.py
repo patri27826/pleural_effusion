@@ -7,7 +7,7 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.model_selection import StratifiedKFold
-from sklearn.preprocessing import StandardScaler
+from sklearn.preprocessing import StandardScaler, MinMaxScaler
 from sklearn.metrics import roc_auc_score
 from sklearn.linear_model import LogisticRegression
 import matplotlib.pyplot as plt
@@ -33,7 +33,7 @@ from sklearn.ensemble import AdaBoostClassifier
 import scipy.stats as stats
 
 
-data = pd.read_csv("output.csv")
+data = pd.read_csv("clinial_feature.csv")
 output_dir = (
     "./results/" + str(datetime.now().strftime("%Y-%m-%d-%H-%M-%S")) + "/"
 )
@@ -45,35 +45,35 @@ os.makedirs(shap_output_dir, exist_ok=True)
 os.makedirs(feature_importance_dir, exist_ok=True)
 os.makedirs(statistic_output_dir, exist_ok=True)
 
-# data = data.drop(
-#     [
-#         # "id",
-#         # "gender",
-#         # "age",
-#         "pH(PL)",
-#         "Gram Stain",
-#         "Acid Fast B(PL)",
-#         # "Appearence",
-#         # "Color",
-#         # "SP.Gravity",
-#         # "Protein",
-#         # "WBC",
-#         # "RBC",
-#         # "Neutrophil%",
-#         # "Lymphocyte%",
-#         "Eosinophil%",
-#         "React Lympho%",
-#         # "Macrophage",
-#         # "Mesothel cell",
-#         # "Glucose (PL)",
-#         # "T-Protein (PL)",
-#         # "LDH (PL)",
-#         # "ADA",
-#         # "Fluid Status",
-#         "Etiology",
-#     ],
-#     axis=1,
-# )
+data = data.drop(
+    [
+        # "id",
+        # "gender",
+        # "age",
+        "pH(PL)",
+        "Gram Stain",
+        "Acid Fast B(PL)",
+        # "Appearence",
+        # "Color",
+        # "SP.Gravity",
+        # "Protein",
+        # "WBC",
+        # "RBC",
+        # "Neutrophil%",
+        # "Lymphocyte%",
+        "Eosinophil%",
+        "React Lympho%",
+        # "Macrophage",
+        # "Mesothel cell",
+        # "Glucose (PL)",
+        # "T-Protein (PL)",
+        # "LDH (PL)",
+        # "ADA",
+        # "Fluid Status",
+        "Etiology",
+    ],
+    axis=1,
+)
 
 macrophage_mapping = {"Few": 0.25, "Some": 0.5, "Many": 0.75}
 status_mapping = {"滲出液": 0, "漏出液": 1}
@@ -106,49 +106,31 @@ appearence_map = {"Clear": 0, "Cloudy": 1, "Turbid": 2, "Bloody": 3}
 #     "腎臟衰竭，體液過多": 0,
 #     "不明原因": 0,
 # }
-# data["Macrophage"] = data["Macrophage"].map(macrophage_mapping)
-# data["Mesothel cell"] = data["Mesothel cell"].map(macrophage_mapping)
-# data['Fluid Status'] = data['Fluid Status'].map(status_mapping)
-# data['Appearence'] = data['Appearence'].map(appearence_map)
-# data['Color'] = data['Color'].map(color_map)
-# # data['Etiology'] = data['Etiology'].map(etiology_mapping)
+data["Macrophage"] = data["Macrophage"].map(macrophage_mapping)
+data["Mesothel cell"] = data["Mesothel cell"].map(macrophage_mapping)
+data['Fluid Status'] = data['Fluid Status'].map(status_mapping)
+data['Appearence'] = data['Appearence'].map(appearence_map)
+data['Color'] = data['Color'].map(color_map)
+# data['Etiology'] = data['Etiology'].map(etiology_mapping)
 
-# # 处理缺失值
-# columns_to_fill = ['age', 'gender', 'Appearence', 'Color', 'Macrophage', 'Mesothel cell',
-#                    'Glucose (PL)', 'T-Protein (PL)', 'LDH (PL)', 'ADA']  # 要处理的欄位列表
-# data.loc[:, columns_to_fill] = data.loc[:, columns_to_fill].fillna(
-#     data[columns_to_fill].median())
+# 处理缺失值
+columns_to_fill = ['age', 'gender', 'Appearence', 'Color', 'Macrophage', 'Mesothel cell',
+                   'Glucose (PL)', 'T-Protein (PL)', 'LDH (PL)', 'ADA']  # 要处理的欄位列表
+data.loc[:, columns_to_fill] = data.loc[:, columns_to_fill].fillna(
+    data[columns_to_fill].median())
 
 # 拆分資料集
 X = data.drop(columns=["Maligant"])
 
 # 對資料進行標準化
-scaler = StandardScaler()
+# scaler = StandardScaler()
+scaler = MinMaxScaler()
 X_scaled = X.copy()
 X[X.columns] = scaler.fit_transform(X_scaled[X.columns])
+print(X)
 
 y = data["Maligant"]
 
-X_train, X_test, y_train, y_test = train_test_split(
-    X, y, test_size=0.1, random_state=42
-)
-
-y_counts = Counter(y_train)
-print("Original non-maligant/maligant case : %s" % y_counts)
-
-sm = SMOTE(random_state=42, k_neighbors=3)
-X_resampled, y_resampled = sm.fit_resample(X_train, y_train)
-
-y_counts = Counter(y_resampled)
-print("OverSample non-maligant/maligant case : %s" % y_counts)
-
-X_resampled, y_resampled = TomekLinks().fit_resample(X_resampled, y_resampled)
-
-y_counts = Counter(y_resampled)
-print("DownSample non-maligant/maligant case : %s" % y_counts)
-
-X_train = X_resampled
-y_train = y_resampled
 
 xgb_params = {
     "objective": "binary:logistic",
@@ -179,12 +161,12 @@ classifiers = {
         min_samples_split=2,
         min_samples_leaf=2,
     ),
-    "Decision Tree": DecisionTreeClassifier(
-        max_depth=15,
-        min_samples_split=2,
-        min_samples_leaf=1,
-        random_state=42,
-    ),
+    # "Decision Tree": DecisionTreeClassifier(
+    #     max_depth=15,
+    #     min_samples_split=2,
+    #     min_samples_leaf=1,
+    #     random_state=42,
+    # ),
     "Logistic Regression": LogisticRegression(
         penalty="l2",
         C=0.1,
@@ -197,8 +179,7 @@ classifiers = {
         probability=True
     ),
     "AdaBoost": AdaBoostClassifier(
-        n_estimators=150,
-        learning_rate=0.1
+        algorithm="SAMME"
     ),
 }
 
@@ -222,8 +203,9 @@ def plot_feature_importance(feature_importance, feature_names, model_name, count
         f'{feature_importance_dir}/{model_name.replace(" ", "_")}_{count}_feature_importance.png')
     # plt.show()
 
-
 # 定義評估模型的函數
+
+
 def evaluate_model(
     model_name,
     model,
@@ -297,14 +279,15 @@ def evaluate_model(
     return accuracy, precision, recall, f1, specificity, auc_roc
 
 
-# 使用 K-Fold 交叉驗證
-n_splits = 5
-kf = KFold(n_splits=n_splits, shuffle=True, random_state=42)
-
 # 儲存指標的列表
 metrics = ["Accuracy", "Precision", "Recall",
            "Specificity", "F1 Score", "AUC-ROC"]
 results = {metric: [] for metric in metrics}
+
+n_splits = 5
+kf = KFold(n_splits=n_splits, shuffle=True, random_state=42)
+
+sm = SMOTE(random_state=42, k_neighbors=3)
 
 # 進行 K-Fold 交叉驗證
 
@@ -319,12 +302,9 @@ for classifier_name, classifier in classifiers.items():
     auc_roc_scores = []
 
     count = 1
-    for train_index, val_index in kf.split(X_train):
-        X_train_fold, X_val_fold = X_train.iloc[train_index], X_train.iloc[val_index]
-        y_train_fold, y_val_fold = y_train.iloc[train_index], y_train.iloc[val_index]
-        
-        X_resampled, y_resampled = sm.fit_resample(X_train_fold, y_train_fold)
-        X_resampled, y_resampled = TomekLinks().fit_resample(X_resampled, y_resampled)
+    for train_index, val_index in kf.split(X):
+        X_train_fold, X_val_fold = X.iloc[train_index], X.iloc[val_index]
+        y_train_fold, y_val_fold = y.iloc[train_index], y.iloc[val_index]
 
         (
             accuracy_fold,
@@ -336,8 +316,8 @@ for classifier_name, classifier in classifiers.items():
         ) = evaluate_model(
             classifier_name,
             classifier,
-            X_resampled,
-            y_resampled,
+            X_train_fold,
+            y_train_fold,
             X_val_fold,
             y_val_fold,
             count,

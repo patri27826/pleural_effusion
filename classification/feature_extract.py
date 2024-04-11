@@ -20,21 +20,21 @@ from radiomics import (
 )
 
 def main():
-    image_directory = r".\image"
-    roi_directory = r".\roi"
+    image_directory = r".\images"
+    roi_directory = r".\masks"
     output = r".\output.csv"
-    clinical_data_file = "data copy.csv"
+    clinical_data_file = "ground_true.csv"
 
     # Read clinical data from the CSV file
     clinical_data = pd.read_csv(clinical_data_file)
 
     tmp_number = []
     settings = {}
-    settings["binWidth"] = 25
-    settings["Normalize"] = True
-    settings["resampledPixelSpacing"] = None
-    settings["interpolator"] = sitk.sitkBSpline
-    settings["label"] = 1
+    # settings["binWidth"] = 25
+    # settings["Normalize"] = True
+    # settings["resampledPixelSpacing"] = None
+    # settings["interpolator"] = sitk.sitkBSpline
+    # settings["label"] = 1
 
     for image_filename, roi_filename in zip(
         os.listdir(image_directory), os.listdir(roi_directory)

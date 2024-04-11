@@ -1,0 +1,101 @@
+﻿id,gender,age,pH(PL),Gram Stain,Acid Fast B(PL),Appearence,Color,SP.Gravity,Protein,WBC,RBC,Neutrophil%,Lymphocyte%,Eosinophil%,React Lympho%,Macrophage,Mesothel cell,Glucose (PL),T-Protein (PL),LDH (PL),ADA,Fluid Status,Etiology,Maligant
+1,1,65.5,,No bacteria seen,0,Bloody,Red,1.032,1,1287,78600,34,66,,,Few,Few,180,5,469.9,20,滲出液,肺炎,0
+2,1,94.3,,No bacteria seen,0,Clear,Pale Yellow,1.017,0,292,686,12,84,2,2,Few,,81,2.2,163.5,8,滲出液,肺炎,0
+3,1,59.9,,No bacteria seen,,Clear,Pale Yellow,1.012,0,45,1,69,26,,4,Some,Some,,1.2,99.1,,漏出液,肝硬化,0
+4,0,86.8,,No bacteria seen,0,Turbid,Orange,1.022,1,524,19000,30,70,,,Some,Few,130,2.9,104.5,,漏出液,心臟衰竭,0
+5,0,69.3,8.3,No bacteria seen,,Clear,Yellow,1.017,1,362,4200,16,82,2,,,,,2,94.7,,漏出液,心臟衰竭,0
+6,1,59.8,,No bacteria seen,0,Turbid,Yellow,1.022,1,226,7000,32,67,,,Some,Few,165,2.7,161.6,4,滲出液,不明原因,0
+7,1,83.2,,No bacteria seen,0,Bloody,Red,1.013,0,304,44900,23,76,1,,Some,Some,91,1.7,123.1,6,漏出液,體液過多,0
+8,0,65.3,,No bacteria seen,0,Cloudy,Pale Yellow,1.019,1,192,64,13,86,1,,Some,Few,112,2.5,87.9,4,漏出液,腎臟衰竭,0
+9,0,71.6,,No bacteria seen,0,Turbid,Pale Yellow,1.031,1,4925,55,32,68,,,Many,Many,,4.7,1870.7,,滲出液,肺癌,1
+10,1,76.3,,No bacteria seen,0,Clear,Yellow,1.03,1,58,10,10,89,,1,Few,Few,,4.5,220.6,7,滲出液,肺炎,0
+11,1,79.9,,No bacteria seen,0,Clear,Pale Yellow,1.021,0,173,114,60,38,,2,Many,Many,,3.1,328.5,,滲出液,攝護腺癌肺部轉移,1
+12,1,82.1,7.7,,,Bloody,Red,1.022,1,8625,39700,96,4,,,Few,,23,3.6,599.6,10,滲出液,膿胸,0
+13,0,84.4,,No bacteria seen,0,Clear,Yellow,1.02,0,443,243,20,80,,,Few,Few,600,2.4,86.2,3,漏出液,心臟衰竭,0
+14,0,60.3,,No bacteria seen,0,Cloudy,Pale Yellow,1.01,1,32,305,54,46,,,Few,Few,,,,,漏出液,肝硬化,0
+15,1,85.9,,No bacteria seen,0,Cloudy,Pale Yellow,1.015,1,31,2070,31,69,,,Few,,160,1.9,88,1,漏出液,胃癌,1
+16,1,88.1,,,,Bloody,Red,1.02,0,1547,32900,1,99,,,,,,2.8,444.6,,滲出液,淋巴癌,1
+17,1,67.9,,,,Cloudy,Yellow,1.025,1,902,265,54,46,,,Few,Few,123,3.6,199,11,滲出液,肺炎,0
+18,1,90.5,,No bacteria seen,0,Turbid,Pale Yellow,1.017,1,195,990,4,81,1,1,Few,Few,203,2.1,125.9,7,漏出液,心臟衰竭,0
+19,1,56.8,,,,Clear,Pale Yellow,1.011,0,378,506,1,98,1,,Some,Some,,1.9,80.6,5,漏出液,不明原因,0
+20,0,80.7,7.1,No bacteria seen,,Cloudy,Yellow,1.023,0,102,540,3,97,,,Few,Few,98,2.9,88.5,,漏出液,腎臟衰竭，體液過多,0
+21,1,79.6,,No bacteria seen,0,Turbid,Red,1.012,1,257,132000,23,77,,,Many,Few,87,1.3,74.4,2,漏出液,腎臟衰竭，體液過多,0
+22,0,88.6,,No bacteria seen,0,Turbid,Yellow,1.021,1,644,9100,12,87,,1,Few,Few,138,2.6,154.9,,滲出液,肺炎,0
+23,0,46.1,,No bacteria seen,,Cloudy,Orange,1.032,1,786,18400,6,93,1,,Few,Few,,,,,滲出液,癌症,1
+24,0,59.3,,No bacteria seen,0,Turbid,Orange,1.014,1,261,21000,3,93,,,Few,Few,272,1.6,65.2,,漏出液,肝硬化,0
+25,1,49.8,,,,Cloudy,Yellow,1.021,1,236,1852,45,55,,,Some,Some,135,2.7,108.4,2,滲出液,肺炎,0
+26,,,,,,Cloudy,Yellow,1.029,0,2925,52,1,99,,,Few,Some,93,4.3,55.2,,滲出液,不明原因,0
+27,1,54,,No bacteria seen,,Bloody,Red,1.018,1,5371,40237,97,3,,,Few,,72,2.5,1667.1,,滲出液,肺膿瘍,0
+28,0,81.1,,,,Cloudy,Orange,1.019,1,1182,12700,25,75,,,Few,Few,369,2.4,549.5,,滲出液,乳癌合併肋膜轉移,1
+29,1,68,7.4,No bacteria seen,,Bloody,Red,1.016,0,534,19100,20,80,,,Some,Some,193,2.1,79,,漏出液,心臟衰竭,0
+30,1,54.8,,,,Turbid,Yellow,1.027,1,2261,240,100,0,,,Few,,7,4.1,6906.5,,滲出液,肺炎,0
+31,1,92.2,8.1,No bacteria seen,,Clear,Yellow,1.02,1,225,469,3,96,,,Some,,82,3,211.8,8,滲出液,肺癌,0
+32,0,65.2,8.1,No bacteria seen,,Cloudy,Yellow,1.03,1,618,5800,10,86,4,,Few,Few,119,4.5,170.4,,滲出液,不明原因,0
+33,0,84,,No bacteria seen,0,Turbid,Yellow,1.023,1,847,2240,27,71,2,,Few,Few,143,3.2,115.4,5,滲出液,肺炎,0
+34,1,64.5,,No bacteria seen,0,Cloudy,Yellow,1.028,0,1252,1479,0,98,,,Some,,593,4,476.9,53,滲出液,肺結核,0
+35,1,83.2,,,,Clear,Yellow,1.028,1,318,1760,9,82,9,,Few,Few,125,4.1,231.1,,滲出液,敗血症,0
+36,1,79.4,,No bacteria seen,0,Clear,Pale Yellow,1.017,1,130,1,29,70,,1,Some,Few,,2.2,148,2,漏出液,肝硬化,0
+37,1,78.1,,No bacteria seen,0,Cloudy,Pale Yellow,1.016,1,170,35,33,66,1,,Some,Few,,2.1,89.4,3,漏出液,心臟衰竭,0
+38,1,78.1,,No bacteria seen,0,Cloudy,Pale Yellow,1.017,1,188,25,50,48,2,,Few,Few,160,2,94,,漏出液,心臟衰竭,0
+39,0,51.5,,,,Turbid,Red,1.024,1,698,121000,18,80,,2,Few,Few,,3.4,1676.3,,滲出液,黑色素癌,1
+40,0,65.1,,,,Turbid,Pale Yellow,1.022,1,810,3000,1,97,,2,Few,,,2.1,144.5,,滲出液,乳癌,1
+41,0,70.2,,No bacteria seen,0,Turbid,Orange,1.021,1,330,43900,0,98,2,,Few,,140,2.9,94.2,3,漏出液,心臟病,0
+42,0,90.2,,No bacteria seen,0,Clear,Yellow,1.016,1,200,35,79,21,,,Few,,273,1.9,91.6,4,漏出液,,0
+43,0,74.6,,No bacteria seen,0,Clear,Yellow,1.016,0,425,1465,85,15,,,,Few,432,1.6,166.5,2,漏出液,急性腎衰竭、白蛋白低下,0
+44,1,63.7,,No bacteria seen,0,Cloudy,Yellow,1.027,1,817,165,3,96,,1,Few,Few,204,3.7,115.1,10,滲出液,縱膈腔癌症合併肋膜轉移,1
+45,1,82.1,,No bacteria seen,0,Turbid,Orange,1.016,1,200,9000,24,71,,,Few,Few,137,2.3,118.5,5,漏出液,不明原因,0
+46,0,56.8,,No bacteria seen,,Clear,Pale Yellow,1.027,1,33,4,0,96,,4,Few,Some,,4.1,111.1,2,滲出液,乳癌合併肺部轉移,1
+47,0,92.7,,No bacteria seen,0,Cloudy,Yellow,1.026,1,357,6000,11,83,2,4,Few,Few,192,3.8,241.9,9,滲出液,肺腺癌合併肋膜轉移,1
+48,1,94.8,,No bacteria seen,0,Turbid,Yellow,1.021,1,2384,7000,75,25,,,Few,,111,3.2,297.5,,滲出液,肺炎,0
+49,1,94.3,,No bacteria seen,0,Cloudy,Yellow,1.029,1,1272,3600,2,70,24,4,Few,,70,4.8,331.1,16,滲出液,肺炎,0
+50,1,79,,No bacteria seen,0,Cloudy,Pale Yellow,1.011,1,186,2070,1,51,,,Few,,253,0.9,70.4,1,漏出液,不明原因,0
+51,1,59.4,,No bacteria seen,,Cloudy,Pale Yellow,1.015,1,219,230,82,14,4,,Few,Few,135,1.1,94.6,,漏出液,不明原因,0
+52,0,58.4,,No bacteria seen,0,Cloudy,Yellow,1.021,1,220,105,9,91,,,Many,Few,100,3,119.1,5,漏出液,肝硬化,0
+53,1,64.9,,No bacteria seen,,Purulent,White,1.031,1,1501,9000,2,98,,,Few,Few,116,5,123.6,,滲出液,肺癌手術後引發之乳糜胸,0
+54,0,83.9,,No bacteria seen,0,Turbid,Orange,1.025,1,262,15300,1,98,,1,Few,,132,3.7,111.9,13,滲出液,肺炎,0
+55,1,83.2,,No bacteria seen,0,Cloudy,Red,1.012,1,521,26900,31,69,,,Few,Few,71,1.3,151.7,,漏出液,白蛋白低下,0
+56,0,63.1,,No bacteria seen,0,Turbid,Yellow,1.013,0,220,6000,2,98,,,Few,,115,1.4,74.6,3,漏出液,心臟衰竭,0
+57,1,95.7,,No bacteria seen,0,Cloudy,Yellow,1.027,1,729,3800,5,86,9,,Few,Few,152,4,124.1,16,滲出液,肺炎,0
+58,0,84.1,,No bacteria seen,0,Bloody,Red,1.025,1,6521,54200,45,51,4,,Few,Few,998,3,447.5,,滲出液,肺炎合併膿胸,0
+59,0,50.7,,,0,Cloudy,Pale Yellow,1.026,1,154,1180,6,93,,1,Many,Few,,3.4,82,,滲出液,腹膜癌合併肋膜轉移,1
+60,1,83.7,,No bacteria seen,,Cloudy,Yellow,1.029,1,2513,1135,73,27,,,Few,Few,,4.1,99.1,18,滲出液,肺炎,0
+61,1,61.8,,No bacteria seen,0,Turbid,Orange,1.027,1,1341,42200,10,90,,,Many,Some,155,3.9,322,10,滲出液,肺癌合併肋膜轉移,1
+62,1,78.3,,No bacteria seen,,Bloody,Red,1.025,1,368,180200,94,6,,,Few,Few,,4.1,272.8,,滲出液,肺癌合併肋膜轉移,1
+63,1,76.1,,No bacteria seen,0,Turbid,Orange,1.028,1,377,14000,5,93,,2,Few,Few,96,4.2,599,28,滲出液,肺癌合併肋膜轉移,1
+64,1,56.5,,No bacteria seen,0,Turbid,Yellow,1.027,1,3265,3000,29,39,32,,Few,,86,4.1,353.2,,滲出液,肺炎,0
+65,1,70,,No bacteria seen,0,Cloudy,Pale Yellow,1.014,1,120,85,2,98,,,Few,Few,110,1.5,94.1,1,漏出液,慢性腎臟衰竭、心臟衰竭,0
+66,1,92.4,,No bacteria seen,0,Bloody,Red,1.014,0,122,27500,45,52,,,Few,Few,113,1.3,62.7,2,漏出液,慢性腎臟衰竭,0
+67,1,56.3,,No bacteria seen,0,Turbid,Orange,1.026,0,632,11700,22,78,,,Few,,439,3.5,424.3,5,滲出液,肺炎,0
+68,1,85.6,,No bacteria seen,0,Cloudy,Yellow,1.014,1,61,1270,45,55,,,Many,Few,295,1.5,83.6,2,漏出液,慢性腎臟衰竭,0
+69,0,83.2,,,,Clear,Pale Yellow,1.011,1,83,16,3,94,,1,Some,Some,150,1,55.2,3,漏出液,心臟衰竭,0
+70,0,54.3,,No bacteria seen,0,Cloudy,Yellow,1.023,1,297,315,12,86,,2,Few,Few,,3.2,93.1,26,漏出液,心臟衰竭,0
+71,0,67.8,,,,Cloudy,Yellow,1.033,1,819,350,1,98,,1,Some,Some,,4.7,240.9,13,滲出液,肺癌,1
+72,,,,,,Turbid,Red,1.031,1,3032,41000,0,100,,,Few,Few,,4.8,103.7,7,滲出液,乳癌合併肋膜轉移,1
+73,0,84,,No bacteria seen,0,Cloudy,Pale Yellow,1.018,1,1574,1080,30,64,3,3,Few,Few,127,2.4,161.9,4,滲出液,不明原因,0
+74,1,75.1,,No bacteria seen,0,Bloody,Red,1.021,1,530,100000,1,98,1,,Few,,,2.9,193.8,,滲出液,肺炎,0
+75,1,82,,No bacteria seen,0,Cloudy,Pale Yellow,1.011,1,82,370,24,76,,,Some,Few,137,1.1,97.5,2,漏出液,心臟衰竭,0
+76,0,92.2,,,,Cloudy,Pale Yellow,1.021,1,190,1470,15,83,1,1,Few,Few,,3.1,99.6,,滲出液,肺炎,0
+77,1,81.8,,No bacteria seen,0,Cloudy,Pale Yellow,1.022,1,434,955,1,99,,,Some,Few,228,2.9,72.4,5,滲出液,肺癌,1
+78,1,74.3,,No bacteria seen,0,Turbid,Yellow,1.026,1,1086,2365,6,94,,,Few,Few,134,3.7,168.5,17,滲出液,急性膽囊炎,0
+79,0,76.7,,No bacteria seen,,Clear,Pale Yellow,1.011,1,119,105,5,92,,3,Some,Some,126,1.3,46.9,,漏出液,不明原因,0
+80,1,76.2,,,,Cloudy,Pale Yellow,1.033,1,266,3,50,36,,5,Some,Few,123,5,,,滲出液,肺炎,0
+81,0,78.3,,No bacteria seen,,Turbid,Yellow,1.021,1,797,7000,36,61,3,,Few,Few,605,3,112.7,3,滲出液,甲狀腺癌合併肋膜轉移,1
+82,0,82.9,,No bacteria seen,0,Clear,Pale Yellow,1.012,1,243,205,4,90,,6,Few,Few,107,1.4,63.8,2,漏出液,肝硬化,0
+83,1,88.3,,No bacteria seen,0,Turbid,Orange,1.025,1,187,13900,27,57,12,4,Few,,104,3.3,450.9,,滲出液,肺炎,0
+84,0,83.8,,No bacteria seen,0,Bloody,Red,1.026,1,864,38100,2,98,,,Some,Few,103,3.8,158.2,24,滲出液,肺炎,0
+85,0,63.2,,No bacteria seen,0,Cloudy,Colorless,1.01,1,47,52,1,95,4,,Many,Some,237,0.9,51.6,1,漏出液,慢性腎衰竭,0
+86,1,95.6,,,,Cloudy,Yellow,1.028,1,1426,10400,43,56,1,,Some,Some,179,,,15,滲出液,肺炎,0
+87,0,27.2,,No bacteria seen,0,Turbid,Pale Yellow,1.022,1,8501,5000,99,1,,,Few,,47,2.8,422.8,13,滲出液,肺炎,0
+88,1,81,,,,Cloudy,Yellow,1.014,1,123,273,34,66,,,Some,Some,,1.7,54.1,,漏出液,心臟衰竭,0
+89,1,73.5,,No bacteria seen,,Cloudy,Pale Yellow,1.013,1,152,165,25,75,,,Many,Few,149,1.3,63.8,,漏出液,肝硬化,0
+90,1,59.7,,No bacteria seen,0,Clear,Pale Yellow,1.026,0,419,556,2,97,1,,Some,Few,211,3.5,62.8,,滲出液,肺炎,0
+91,0,85.8,,No bacteria seen,,Cloudy,Yellow,1.029,1,204,48,4,96,,,Few,,125,4.3,105.6,,滲出液,肺炎,0
+92,1,78.2,,,,Cloudy,Yellow,1.028,1,998,1826,39,61,,,Some,Few,,4.1,272.8,,滲出液,肺癌,1
+93,1,89.6,,No bacteria seen,,Cloudy,Red,1.027,1,653,15300,7,87,4,,Some,Few,105,4.2,,,滲出液,肺炎,0
+94,1,51.9,,No bacteria seen,,Cloudy,Pale Yellow,1.032,1,916,25,5,4,91,,Few,Few,,4.9,120.3,,滲出液,不明原因,0
+95,1,83.9,,No bacteria seen,0,Turbid,Pale Yellow,1.018,1,2213,1015,91,9,,,Few,Few,151,2.3,118.3,5,滲出液,肺炎,0
+96,0,73.1,,No bacteria seen,,Clear,Pale Yellow,1.035,1,650,400,96,5,,,Some,,76,5.4,885.5,30,滲出液,肺炎,0
+97,0,89.3,,No bacteria seen,0,Turbid,Yellow,1.026,1,266,6000,33,64,,3,Few,,100,3.8,102.4,7,滲出液,肺炎,0
+98,0,52.3,,No bacteria seen,0,Turbid,Pale Yellow,1.024,1,1253,915,1,46,50,3,Few,Few,93,3.3,867.9,3,滲出液,肺癌,1
+99,1,89.8,,No bacteria seen,0,Turbid,Orange,1.023,1,1236,11000,2,96,,2,Few,,,3,550.5,,滲出液,肺炎,0
+100,0,41.1,,No bacteria seen,,Turbid,Orange,1.021,1,560,17000,5,95,,,Many,Many,,2.8,228.2,,滲出液,乳癌合併肺部轉移,1
